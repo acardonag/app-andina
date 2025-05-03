@@ -1,0 +1,113 @@
+/* Paleta de colores personalizada para la aplicación de manejo del estrés */
+
+:root {
+    /* Colores principales */
+    --primary-color: #7fb536;      /* Verde Areandina */
+    --secondary-color: #f59c00;    /* Naranja Areandina */
+    --accent-color: #f59c00;       /* Naranja Areandina para acentos */
+    --background-color: #F5F5F5;   /* Gris muy claro */
+    --text-color: #4A4A4A;         /* Gris oscuro */
+    --success-color: #7fb536;      /* Verde Areandina para éxito */
+    --warning-color: #f59c00;      /* Naranja Areandina para advertencias */
+    --danger-color: #FFA07A;       /* Salmón claro */
+}
+
+/* Aplicar colores al sidebar */
+#sidebar {
+    background: var(--primary-color);
+}
+
+#sidebar .sidebar_blog_1 {
+    background: var(--primary-color);
+}
+
+#sidebar .sidebar_blog_2 {
+    background: var(--primary-color);
+}
+
+/* Colores de los iconos en el sidebar */
+.yellow_color {
+    color: var(--secondary-color) !important;
+}
+
+.blue1_color {
+    color: var(--secondary-color) !important;
+}
+
+.purple_color {
+    color: var(--secondary-color) !important;
+}
+
+/* Estilos para los contenedores */
+.white_shd {
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Estilos para los botones */
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Estilos para los encabezados */
+.heading1 h2 {
+    color: var(--primary-color);
+}
+
+/* Estilos para el selector de estado de ánimo */
+#mood-selector {
+    border-color: var(--primary-color);
+}
+
+#mood-selector:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(127, 181, 54, 0.25);
+}
+
+/* Estilos para el input de meta */
+#goal-input {
+    border-color: var(--primary-color);
+}
+
+#goal-input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(127, 181, 54, 0.25);
+}
+
+/* Estilos para el topbar */
+.topbar {
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Estilos para las notificaciones */
+.badge {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Estilos para el contenido principal */
+.midde_cont {
+    background-color: var(--background-color);
+}
+
+/* Estilos para los enlaces */
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+/* Estilos para el estado en línea */
+.online_animation {
+    background-color: var(--success-color);
+} 
