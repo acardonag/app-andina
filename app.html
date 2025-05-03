@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <title>Bienvenido - Manejo del Estrés Estudiantil</title>
+      <meta name="keywords" content="estrés estudiantil, bienestar, salud mental">
+      <meta name="description" content="Aplicación para el manejo del estrés estudiantil">
+      <meta name="author" content="">
+      <link rel="icon" href="images/fevicon.png" type="image/png" />
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <link rel="stylesheet" href="style.css" />
+      <link rel="stylesheet" href="css/responsive.css" />
+      <link rel="stylesheet" href="css/colors.css" />
+      <link rel="stylesheet" href="css/bootstrap-select.css" />
+      <link rel="stylesheet" href="css/perfect-scrollbar.css" />
+      <link rel="stylesheet" href="css/custom.css" />
+      <link rel="stylesheet" href="css/custom-colors.css" />
+   </head>
+   <body class="dashboard dashboard_1">
+      <div class="full_container">
+         <div class="inner_container">
+            <!-- Sidebar -->
+            <nav id="sidebar">
+               <div class="sidebar_blog_1">
+                  <div class="sidebar-header">
+                     <div class="logo_section">
+                        <a href="index.html"><img class="logo_icon img-responsive" src="https://cms.areandina.edu.co/sites/default/files/styles/large/public/2022-06/header_educontinua_virtual_-_opt.png?itok=9ItxRIJZ" alt="Logo Areandina" /></a>
+                     </div>
+                  </div>
+                  <div class="sidebar_user_info">
+                     <div class="icon_setting"></div>
+                     <div class="user_profle_side">
+                        <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
+                        <div class="user_info">
+                           <h6>Estudiante</h6>
+                           <p><span class="online_animation"></span> En línea</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="sidebar_blog_2">
+                  <h4>Menú Principal</h4>
+                  <ul class="list-unstyled components">
+                     <li class="active">
+                        <a href="app.html"><i class="fa fa-home yellow_color"></i> <span>Inicio</span></a>
+                     </li>
+                     <li>
+                        <a href="profile.html"><i class="fa fa-user blue1_color"></i> <span>Mi Perfil</span></a>
+                     </li>
+                     <li>
+                        <a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Configuración</span></a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <!-- end sidebar -->
+            <!-- right content -->
+            <div id="content">
+               <!-- topbar -->
+               <div class="topbar">
+                  <nav class="navbar navbar-expand-lg navbar-light">
+                     <div class="full">
+                        <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
+                        <div class="logo_section">
+                           <a href="app.html"><img class="img-responsive" src="https://cms.areandina.edu.co/sites/default/files/styles/large/public/2022-06/header_educontinua_virtual_-_opt.png?itok=9ItxRIJZ" alt="Logo Areandina" /></a>
+                        </div>
+                        <div class="right_topbar">
+                           <div class="icon_info">
+                              <ul>
+                                 <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
+                                 <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </nav>
+               </div>
+               <!-- end topbar -->
+               <!-- dashboard inner -->
+               <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Bienvenido a tu Espacio de Bienestar</h2>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Sección de Bienvenida -->
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>¡Hola! Estamos aquí para ayudarte</h2>
+                                 </div>
+                              </div>
+                              <div class="full padding_infor_info">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <p class="lead">Bienvenido a tu espacio personal para el manejo del estrés. Aquí encontrarás herramientas y recursos para ayudarte a mantener un equilibrio saludable entre tus estudios y tu bienestar.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Opinómetro -->
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>¿Cómo te sientes hoy?</h2>
+                                 </div>
+                              </div>
+                              <div class="full padding_infor_info">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="form-group">
+                                          <select class="form-control" id="mood-selector">
+                                             <option value="">Selecciona tu estado de ánimo</option>
+                                             <option value="excelente">😊 Excelente</option>
+                                             <option value="bien">🙂 Bien</option>
+                                             <option value="normal">😐 Normal</option>
+                                             <option value="mal">😔 Mal</option>
+                                             <option value="terrible">😢 Terrible</option>
+                                          </select>
+                                       </div>
+                                       <!-- Historial de estados de ánimo -->
+                                       <div class="mt-3">
+                                          <h5>Últimos estados de ánimo:</h5>
+                                          <ul class="list-group" id="mood-history">
+                                             <!-- El historial se llenará dinámicamente -->
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Próxima Meta -->
+                        <div class="col-md-6">
+                           <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Mi Próxima Meta</h2>
+                                 </div>
+                              </div>
+                              <div class="full padding_infor_info">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="form-group">
+                                          <input type="text" class="form-control" id="goal-input" placeholder="¿Cuál es tu próxima meta?">
+                                       </div>
+                                       <button class="btn btn-primary" id="save-goal">Guardar Meta</button>
+                                       <button class="btn btn-danger ms-2" id="clear-goals">Limpiar Metas</button>
+                                       <!-- Historial de metas -->
+                                       <div class="mt-3">
+                                          <h5>Mis Metas:</h5>
+                                          <ul class="list-group" id="goal-history">
+                                             <!-- El historial se llenará dinámicamente -->
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Formulario de Google -->
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Cuéntanos más sobre ti</h2>
+                                 </div>
+                              </div>
+                              <div class="full padding_infor_info">
+                                 <div class="row">
+                                    <div class="col-lg-12">
+                                       <iframe src="https://docs.google.com/forms/d/1DGiFLEuopUtymMpkPw35UJYSxxXO1VhCy0qI7hoF9ds/viewform?embedded=true" 
+                                               width="100%" 
+                                               height="600" 
+                                               frameborder="0" 
+                                               marginheight="0" 
+                                               marginwidth="0">
+                                           Cargando...
+                                       </iframe>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- jQuery -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <!-- wow animation -->
+      <script src="js/animate.js"></script>
+      <!-- select country -->
+      <script src="js/bootstrap-select.js"></script>
+      <!-- nice scrollbar -->
+      <script src="js/perfect-scrollbar.min.js"></script>
+      <script>
+         var ps = new PerfectScrollbar('#sidebar');
+      </script>
+      <!-- custom js -->
+      <script src="js/custom.js"></script>
+      <script>
+         // Funciones para manejar el localStorage
+         function saveToLocalStorage(key, value, isCompleted = false) {
+             let items = JSON.parse(localStorage.getItem(key) || '[]');
+             
+             // Si es una meta, agregar el estado de completado
+             if (key === 'goals') {
+                 items.unshift({
+                     id: Date.now(), // Agregar un ID único
+                     value: value,
+                     date: new Date().toLocaleString(),
+                     completed: false // Siempre se crea como no completada
+                 });
+                 // Mantener solo los últimos 15 items no completados
+                 items = items.filter(item => !item.completed).slice(0, 15);
+             } else if (key === 'completed_goals') {
+                 items.unshift({
+                     id: Date.now(), // Agregar un ID único
+                     value: value,
+                     date: new Date().toLocaleString(),
+                     completed: true
+                 });
+                 // Mantener solo los últimos 15 items completados
+                 items = items.slice(0, 15);
+             } else {
+                 items.unshift({
+                     value: value,
+                     date: new Date().toLocaleString()
+                 });
+                 // Mantener solo los últimos 5 items para estados de ánimo
+                 items = items.slice(0, 5);
+             }
+             
+             localStorage.setItem(key, JSON.stringify(items));
+             return items;
+         }
+
+         function getFromLocalStorage(key) {
+             return JSON.parse(localStorage.getItem(key) || '[]');
+         }
+
+         function updateHistoryDisplay(key, containerId) {
+             const items = getFromLocalStorage(key);
+             const container = document.getElementById(containerId);
+             
+             if (key === 'goals') {
+                 const completedItems = getFromLocalStorage('completed_goals');
+                 const allItems = [...items, ...completedItems];
+                 
+                 container.innerHTML = allItems.map(item => `
+                     <li class="list-group-item d-flex justify-content-between align-items-center ${item.completed ? 'text-muted' : ''}">
+                         <div class="d-flex align-items-center">
+                             <input type="checkbox" 
+                                    class="form-check-input me-2" 
+                                    ${item.completed ? 'checked' : ''} 
+                                    onchange="toggleGoalCompletion(${item.id}, ${item.completed})">
+                             <span style="${item.completed ? 'text-decoration: line-through;' : ''}">${item.value}</span>
+                         </div>
+                         <small class="text-muted">${item.date}</small>
+                     </li>
+                 `).join('');
+             } else {
+                 container.innerHTML = items.map(item => `
+                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                         <span>${item.value}</span>
+                         <small class="text-muted">${item.date}</small>
+                     </li>
+                 `).join('');
+             }
+         }
+
+         function toggleGoalCompletion(itemId, isCurrentlyCompleted) {
+             const sourceKey = isCurrentlyCompleted ? 'completed_goals' : 'goals';
+             const targetKey = isCurrentlyCompleted ? 'goals' : 'completed_goals';
+             
+             // Obtener las listas actuales
+             const sourceItems = getFromLocalStorage(sourceKey);
+             const targetItems = getFromLocalStorage(targetKey);
+             
+             // Encontrar el item a mover
+             const itemIndex = sourceItems.findIndex(item => item.id === itemId);
+             if (itemIndex === -1) return;
+             
+             const itemToMove = sourceItems[itemIndex];
+             
+             // Remover el item de la lista fuente
+             sourceItems.splice(itemIndex, 1);
+             localStorage.setItem(sourceKey, JSON.stringify(sourceItems));
+             
+             // Agregar el item a la lista destino con el estado opuesto
+             itemToMove.completed = !isCurrentlyCompleted;
+             targetItems.unshift(itemToMove);
+             
+             // Mantener el límite de 15 items
+             const updatedTargetItems = targetItems.slice(0, 15);
+             localStorage.setItem(targetKey, JSON.stringify(updatedTargetItems));
+             
+             // Actualizar la visualización
+             updateHistoryDisplay('goals', 'goal-history');
+         }
+
+         function clearAllGoals() {
+             if (confirm('¿Estás seguro que deseas eliminar todas tus metas? Esta acción no se puede deshacer.')) {
+                 localStorage.removeItem('goals');
+                 localStorage.removeItem('completed_goals');
+                 updateHistoryDisplay('goals', 'goal-history');
+                 alert('Todas las metas han sido eliminadas.');
+             }
+         }
+
+         // Inicializar historiales al cargar la página
+         document.addEventListener('DOMContentLoaded', function() {
+             updateHistoryDisplay('moods', 'mood-history');
+             updateHistoryDisplay('goals', 'goal-history');
+             
+             // Agregar evento al botón de limpiar metas
+             document.getElementById('clear-goals').addEventListener('click', clearAllGoals);
+         });
+
+         // Script para manejar el guardado de la meta
+         document.getElementById('save-goal').addEventListener('click', function() {
+             const goal = document.getElementById('goal-input').value;
+             if (goal) {
+                 saveToLocalStorage('goals', goal, false);
+                 updateHistoryDisplay('goals', 'goal-history');
+                 document.getElementById('goal-input').value = '';
+                 alert('¡Meta guardada con éxito!');
+             } else {
+                 alert('Por favor, ingresa una meta');
+             }
+         });
+
+         // Script para manejar el selector de estado de ánimo
+         document.getElementById('mood-selector').addEventListener('change', function() {
+             const mood = this.value;
+             if (mood) {
+                 const moodText = this.options[this.selectedIndex].text;
+                 saveToLocalStorage('moods', moodText);
+                 updateHistoryDisplay('moods', 'mood-history');
+                 this.value = ''; // Resetear el selector
+                 alert('Gracias por compartir cómo te sientes. Recuerda que estamos aquí para ayudarte.');
+             }
+         });
+      </script>
+   </body>
+</html> 
