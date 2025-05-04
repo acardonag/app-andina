@@ -197,6 +197,74 @@
             color: #666;
             font-size: 14px;
          }
+
+         .notification {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            max-width: 400px;
+            animation: slideIn 0.3s ease-out;
+            border-left: 4px solid var(--areandina-green);
+         }
+
+         .notification.error {
+            border-left-color: var(--secondary-color);
+         }
+
+         .notification i {
+            margin-right: 12px;
+            font-size: 20px;
+         }
+
+         .notification.success i {
+            color: var(--areandina-green);
+         }
+
+         .notification.error i {
+            color: var(--secondary-color);
+         }
+
+         .notification-content {
+            flex-grow: 1;
+         }
+
+         .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-color);
+         }
+
+         .notification-message {
+            color: #666;
+            font-size: 14px;
+         }
+
+         @keyframes slideIn {
+            from {
+               transform: translateX(100%);
+               opacity: 0;
+            }
+            to {
+               transform: translateX(0);
+               opacity: 1;
+            }
+         }
+
+         @keyframes fadeOut {
+            from {
+               transform: translateX(0);
+               opacity: 1;
+            }
+            to {
+               transform: translateX(100%);
+               opacity: 0;
+            }
+         }
       </style>
    </head>
    <body class="dashboard dashboard_1">
@@ -408,6 +476,10 @@
             </div>
          </div>
       </div>
+
+      <!-- Contenedor de Notificaciones -->
+      <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
       <!-- jQuery -->
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
@@ -556,20 +628,70 @@
          });
 
          // Script para manejar el selector de estado de ánimo
-         document.getElementById('mood-selector').addEventListener('change', function() {
-             const mood = this.value;
-             if (mood) {
-                 const moodText = this.options[this.selectedIndex].text;
-                 saveToLocalStorage('moods', moodText);
-                 updateHistoryDisplay('moods', 'mood-history');
-                 this.value = ''; // Resetear el selector
-                 alert('Gracias por compartir cómo te sientes. Recuerda que estamos aquí para ayudarte.');
-             }
+         document.getElementById('mood-selector').addEventListener('change', async function() {
+            try {
+               console.log('=== INICIO DEL EVENTO DE CAMBIO DE ESTADO DE ÁNIMO ===');
+               const mood = this.value;
+               console.log('Valor seleccionado:', mood);
+               
+               if (mood) {
+                  const moodText = this.options[this.selectedIndex].text;
+                  console.log('Texto del estado de ánimo:', moodText);
+                  
+                  const user = auth.currentUser;
+                  if (!user) {
+                     throw new Error('No hay usuario autenticado');
+                  }
+                  
+                  console.log('Usuario autenticado:', user.email);
+                  console.log('ID del usuario:', user.uid);
+                  
+                  const moodData = {
+                     mood: moodText,
+                     userId: user.uid,
+                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                  };
+                  
+                  console.log('Intentando guardar datos:', moodData);
+                  
+                  // Guardar en Firestore
+                  const docRef = await db.collection('moods').add(moodData);
+                  console.log('Documento guardado con ID:', docRef.id);
+                  
+                  // Verificar que se guardó correctamente
+                  const savedDoc = await docRef.get();
+                  if (!savedDoc.exists) {
+                     throw new Error('El documento no se guardó correctamente');
+                  }
+                  
+                  console.log('Documento guardado exitosamente:', savedDoc.data());
+                  
+                  // Resetear el selector
+                  this.value = '';
+                  
+                  // Actualizar la visualización
+                  await updateHistoryDisplay('moods', 'mood-history');
+                  
+                  showNotification(
+                     '¡Estado de ánimo guardado!',
+                     'Gracias por compartir cómo te sientes. Recuerda que estamos aquí para ayudarte.'
+                  );
+               }
+               console.log('=== FIN DEL EVENTO DE CAMBIO DE ESTADO DE ÁNIMO ===');
+            } catch (error) {
+               console.error('Error en el evento de cambio de estado de ánimo:', error);
+               showNotification(
+                  'Error',
+                  'No se pudo guardar el estado de ánimo: ' + error.message,
+                  'error'
+               );
+            }
          });
       </script>
       <!-- Firebase SDK -->
       <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
       <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
       <script>
          // Configuración de Firebase
@@ -584,8 +706,9 @@
          // Inicializar Firebase
          firebase.initializeApp(firebaseConfig);
 
-         // Referencia a la autenticación
+         // Referencias a los servicios
          const auth = firebase.auth();
+         const db = firebase.firestore();
 
          // Función para iniciar sesión con Google
          window.loginWithGoogle = function() {
@@ -598,6 +721,18 @@
                   authMessage.className = 'success-message';
                   authMessage.textContent = '¡Inicio de sesión exitoso!';
                   console.log('Usuario de Google:', user);
+                  
+                  // Asegurarnos de que el usuario esté completamente autenticado
+                  return auth.currentUser.getIdToken(true);
+               })
+               .then(() => {
+                  // Cargar el historial después de asegurar la autenticación
+                  updateHistoryDisplay('moods', 'mood-history').catch(error => {
+                     console.error('Error al cargar estados de ánimo:', error);
+                  });
+                  updateHistoryDisplay('goals', 'goal-history').catch(error => {
+                     console.error('Error al cargar metas:', error);
+                  });
                })
                .catch((error) => {
                   authMessage.className = 'error-message';
@@ -608,6 +743,7 @@
                   } else {
                      authMessage.textContent = error.message;
                   }
+                  console.error('Error en la autenticación:', error);
                });
          }
 
@@ -622,23 +758,262 @@
                });
          }
 
-         // Listener para cambios en el estado de autenticación
+         // Función para guardar datos en Firestore
+         async function saveToFirestore(collection, data) {
+            try {
+               const user = auth.currentUser;
+               if (!user) {
+                  throw new Error('Usuario no autenticado');
+               }
+
+               console.log('=== INICIO DEL GUARDADO ===');
+               console.log('Guardando datos en', collection, ':', data);
+               console.log('Usuario actual:', user.uid);
+
+               const docData = {
+                  ...data,
+                  userId: user.uid,
+                  timestamp: firebase.firestore.FieldValue.serverTimestamp()
+               };
+
+               console.log('Datos a guardar:', docData);
+
+               // Intentar guardar el documento
+               const docRef = await db.collection(collection).add(docData);
+               console.log('Documento guardado con ID:', docRef.id);
+
+               // Verificar que el documento se guardó correctamente
+               const savedDoc = await docRef.get();
+               if (!savedDoc.exists) {
+                  throw new Error('El documento no se guardó correctamente');
+               }
+
+               const savedData = savedDoc.data();
+               console.log('Documento guardado:', savedData);
+               console.log('=== FIN DEL GUARDADO ===');
+
+               return docRef.id;
+            } catch (error) {
+               console.error('Error al guardar en Firestore:', error);
+               throw error;
+            }
+         }
+
+         // Función para obtener datos de Firestore
+         async function getFromFirestore(collection) {
+            try {
+               const user = auth.currentUser;
+               if (!user) {
+                  throw new Error('Usuario no autenticado');
+               }
+
+               console.log('=== INICIO DE LA CONSULTA ===');
+               console.log('Consultando Firestore...');
+               console.log('Colección:', collection);
+               console.log('Usuario ID:', user.uid);
+
+               // Realizar la consulta
+               const query = db.collection(collection)
+                  .where('userId', '==', user.uid)
+                  .orderBy('timestamp', 'desc');
+               
+               console.log('Ejecutando consulta...');
+               const snapshot = await query.get();
+               console.log('Snapshot vacío?', snapshot.empty);
+               console.log('Número de documentos:', snapshot.size);
+
+               if (!snapshot.empty) {
+                  snapshot.forEach(doc => {
+                     console.log('Documento encontrado:', doc.id, doc.data());
+                  });
+               }
+
+               const data = snapshot.docs.map(doc => {
+                  const docData = doc.data();
+                  return {
+                     id: doc.id,
+                     ...docData
+                  };
+               });
+
+               console.log('Datos procesados:', data);
+               console.log('=== FIN DE LA CONSULTA ===');
+               return data;
+            } catch (error) {
+               console.error('Error al obtener de Firestore:', error);
+               throw error;
+            }
+         }
+
+         // Función para guardar el estado de ánimo
+         async function saveMood(mood) {
+            try {
+               console.log('=== INICIO GUARDAR ESTADO DE ÁNIMO ===');
+               console.log('Intentando guardar estado de ánimo:', mood);
+               
+               const user = auth.currentUser;
+               if (!user) {
+                  throw new Error('No hay usuario autenticado');
+               }
+               
+               const moodData = {
+                  mood: mood,
+                  userId: user.uid,
+                  timestamp: firebase.firestore.FieldValue.serverTimestamp()
+               };
+               
+               console.log('Intentando guardar datos:', moodData);
+               
+               const docRef = await db.collection('moods').add(moodData);
+               console.log('Documento guardado con ID:', docRef.id);
+               
+               const savedDoc = await docRef.get();
+               if (!savedDoc.exists) {
+                  throw new Error('El documento no se guardó correctamente');
+               }
+               
+               console.log('Documento guardado exitosamente:', savedDoc.data());
+               
+               await updateHistoryDisplay('moods', 'mood-history');
+               console.log('Historial actualizado');
+               
+               showNotification(
+                  '¡Estado de ánimo guardado!',
+                  'Gracias por compartir cómo te sientes. Recuerda que estamos aquí para ayudarte.'
+               );
+            } catch (error) {
+               console.error('Error al guardar el estado de ánimo:', error);
+               showNotification(
+                  'Error',
+                  'No se pudo guardar el estado de ánimo: ' + error.message,
+                  'error'
+               );
+            }
+         }
+
+         // Función para guardar una meta
+         async function saveGoal(goal) {
+            try {
+               console.log('Intentando guardar meta:', goal);
+               const docId = await saveToFirestore('goals', { goal });
+               console.log('Meta guardada exitosamente con ID:', docId);
+               
+               await updateHistoryDisplay('goals', 'goal-history');
+               console.log('Historial actualizado');
+               
+               showNotification(
+                  '¡Meta guardada!',
+                  'Tu meta ha sido guardada exitosamente.'
+               );
+            } catch (error) {
+               console.error('Error al guardar la meta:', error);
+               showNotification(
+                  'Error',
+                  'No se pudo guardar la meta: ' + error.message,
+                  'error'
+               );
+            }
+         }
+
+         // Cargar el historial cuando el usuario inicie sesión
          auth.onAuthStateChanged((user) => {
             const authContainer = document.getElementById('auth-container');
             const appContent = document.getElementById('app-content');
             const userEmail = document.getElementById('user-email');
 
             if (user) {
+               console.log('Usuario autenticado:', user.email);
                // Usuario ha iniciado sesión
                authContainer.style.display = 'none';
                appContent.style.display = 'block';
                if (userEmail) {
                   userEmail.textContent = user.email;
                }
+               
+               // Cargar el historial inmediatamente
+               updateHistoryDisplay('moods', 'mood-history').catch(error => {
+                  console.error('Error al cargar estados de ánimo:', error);
+               });
+               updateHistoryDisplay('goals', 'goal-history').catch(error => {
+                  console.error('Error al cargar metas:', error);
+               });
             } else {
+               console.log('No hay usuario autenticado');
                // Usuario ha cerrado sesión
                authContainer.style.display = 'block';
                appContent.style.display = 'none';
+            }
+         });
+
+         // Función para actualizar el historial
+         async function updateHistoryDisplay(collection, elementId) {
+            try {
+               const user = auth.currentUser;
+               if (!user) {
+                  console.log('No hay usuario autenticado, esperando...');
+                  return;
+               }
+
+               console.log('Obteniendo datos para:', collection, 'usuario:', user.email);
+               const data = await getFromFirestore(collection);
+               console.log('Datos obtenidos:', data);
+               
+               const historyElement = document.getElementById(elementId);
+               if (historyElement) {
+                  historyElement.innerHTML = data.map(item => {
+                     const date = item.timestamp ? new Date(item.timestamp.toDate()).toLocaleDateString() : 'Fecha no disponible';
+                     return `
+                        <div class="history-item d-flex justify-content-between align-items-center">
+                           <span>${collection === 'moods' ? item.mood : item.goal}</span>
+                           <small class="text-muted">${date}</small>
+                        </div>
+                     `;
+                  }).join('');
+               }
+            } catch (error) {
+               console.error('Error al actualizar el historial:', error);
+               throw error;
+            }
+         }
+
+         // Función para eliminar un elemento
+         async function deleteItem(collection, docId) {
+            try {
+               await deleteFromFirestore(collection, docId);
+               updateHistoryDisplay(collection, `${collection}-history`);
+            } catch (error) {
+               console.error('Error al eliminar el elemento:', error);
+               alert('Error al eliminar el elemento');
+            }
+         }
+
+         // Función para limpiar todas las metas
+         async function clearAllGoals() {
+            try {
+               const goals = await getFromFirestore('goals');
+               for (const goal of goals) {
+                  await deleteFromFirestore('goals', goal.id);
+               }
+               updateHistoryDisplay('goals', 'goal-history');
+               alert('Todas las metas han sido eliminadas');
+            } catch (error) {
+               console.error('Error al limpiar las metas:', error);
+               alert('Error al limpiar las metas');
+            }
+         }
+
+         // Actualizar los event listeners para usar las nuevas funciones
+         document.getElementById('save-goal').addEventListener('click', function() {
+            const goal = document.getElementById('goal-input').value;
+            if (goal) {
+               saveGoal(goal);
+               document.getElementById('goal-input').value = '';
+            } else {
+               showNotification(
+                  'Campo vacío',
+                  'Por favor, ingresa una meta antes de guardar.',
+                  'error'
+               );
             }
          });
       </script>
@@ -739,6 +1114,35 @@
                   messageDiv.textContent = error.message;
                   messageDiv.style.display = 'block';
                });
+         }
+      </script>
+
+      <script>
+         // Función para mostrar notificaciones
+         function showNotification(title, message, type = 'success') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            
+            notification.innerHTML = `
+               <i class="fa ${icon}"></i>
+               <div class="notification-content">
+                  <div class="notification-title">${title}</div>
+                  <div class="notification-message">${message}</div>
+               </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Eliminar la notificación después de 3 segundos
+            setTimeout(() => {
+               notification.style.animation = 'fadeOut 0.3s ease-out';
+               setTimeout(() => {
+                  container.removeChild(notification);
+               }, 300);
+            }, 3000);
          }
       </script>
    </body>
