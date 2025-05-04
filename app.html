@@ -358,7 +358,7 @@
                         <div class="row column_title">
                            <div class="col-md-12">
                               <div class="page_title">
-                                 <h2>Bienvenido a tu Espacio de Bienestar</h2>
+                                 <h2>Bienvenido a tu Espacio de Bienestar Académico</h2>
                               </div>
                            </div>
                         </div>
@@ -368,13 +368,13 @@
                               <div class="white_shd full margin_bottom_30">
                                  <div class="full graph_head">
                                     <div class="heading1 margin_0">
-                                       <h2>¡Hola! Estamos aquí para ayudarte</h2>
+                                       <h2>¡Hola! Estamos aquí para acompañarte en tu bienestar</h2>
                                     </div>
                                  </div>
                                  <div class="full padding_infor_info">
                                     <div class="row">
                                        <div class="col-lg-12">
-                                          <p class="lead">Bienvenido a tu espacio personal para el manejo del estrés. Aquí encontrarás herramientas y recursos para ayudarte a mantener un equilibrio saludable entre tus estudios y tu bienestar.</p>
+                                          <p class="lead">Bienvenido a tu espacio personal para el manejo del estrés académico. Aquí encontrarás técnicas de respiración, mindfulness, organización del tiempo y otras estrategias efectivas para mantener un equilibrio saludable entre tus estudios y tu bienestar. Aprenderás a identificar tus emociones y recibirás recomendaciones personalizadas para cada situación.</p>
                                        </div>
                                     </div>
                                  </div>
@@ -383,6 +383,24 @@
                         </div>
                         <!-- Opinómetro -->
                         <div class="row">
+                           <div class="col-md-6">
+                              <div class="white_shd full margin_bottom_30">
+                                 <div class="full graph_head">
+                                    <div class="heading1 margin_0">
+                                       <h2>Recomendaciones para tu estado de ánimo</h2>
+                                    </div>
+                                 </div>
+                                 <div class="full padding_infor_info">
+                                    <div class="row">
+                                       <div class="col-lg-12">
+                                          <div id="mood-feedback" class="text-center">
+                                             <!-- El contenido se llenará dinámicamente -->
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                            <div class="col-md-6">
                               <div class="white_shd full margin_bottom_30">
                                  <div class="full graph_head">
@@ -396,11 +414,10 @@
                                           <div class="form-group">
                                              <select class="form-control" id="mood-selector">
                                                 <option value="">Selecciona tu estado de ánimo</option>
-                                                <option value="excelente">😊 Excelente</option>
-                                                <option value="bien">🙂 Bien</option>
-                                                <option value="normal">😐 Normal</option>
-                                                <option value="mal">😔 Mal</option>
-                                                <option value="terrible">😢 Terrible</option>
+                                                <option value="frustrado">😤 Frustrado(a)</option>
+                                                <option value="feliz">😊 Feliz</option>
+                                                <option value="triste">😢 Triste</option>
+                                                <option value="ansioso">😰 Ansioso(a)</option>
                                              </select>
                                           </div>
                                           <!-- Historial de estados de ánimo -->
@@ -415,8 +432,10 @@
                                  </div>
                               </div>
                            </div>
-                           <!-- Próxima Meta -->
-                           <div class="col-md-6">
+                        </div>
+                        <!-- Mis Metas (Movida a nueva fila) -->
+                        <div class="row">
+                           <div class="col-md-12">
                               <div class="white_shd full margin_bottom_30">
                                  <div class="full graph_head">
                                     <div class="heading1 margin_0">
@@ -470,6 +489,63 @@
                               </div>
                            </div>
                         </div>
+                        <!-- Nueva Sección de Recomendaciones para Exámenes -->
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="white_shd full margin_bottom_30">
+                                 <div class="full graph_head">
+                                    <div class="heading1 margin_0">
+                                       <h2>Recomendaciones para Preparar tus Exámenes</h2>
+                                    </div>
+                                 </div>
+                                 <div class="full padding_infor_info">
+                                    <div class="row">
+                                       <div class="col-lg-4 text-center">
+                                          <img src="images/moods/invitation.jpeg" alt="Preparación de exámenes" class="img-fluid mb-4" style="max-width: 200px; border-radius: 10px;">
+                                       </div>
+                                       <div class="col-lg-8">
+                                          <h4 class="mb-4">Estrategias efectivas para el éxito académico</h4>
+                                          <div class="recommendations">
+                                             <div class="recommendation-item mb-4">
+                                                <h5><i class="fa fa-calendar me-2 text-primary"></i>Planificación</h5>
+                                                <ul class="list-unstyled ps-4">
+                                                   <li>• Crea un calendario de estudio 2-3 semanas antes del examen</li>
+                                                   <li>• Divide el material en secciones manejables</li>
+                                                   <li>• Establece objetivos diarios realistas</li>
+                                                </ul>
+                                             </div>
+                                             <div class="recommendation-item mb-4">
+                                                <h5><i class="fa fa-book me-2 text-success"></i>Técnicas de Estudio</h5>
+                                                <ul class="list-unstyled ps-4">
+                                                   <li>• Utiliza mapas mentales y resúmenes</li>
+                                                   <li>• Practica con exámenes anteriores</li>
+                                                   <li>• Aplica la técnica Pomodoro: 25 minutos de estudio, 5 de descanso</li>
+                                                </ul>
+                                             </div>
+                                             <div class="recommendation-item mb-4">
+                                                <h5><i class="fa fa-heart me-2 text-danger"></i>Autocuidado</h5>
+                                                <ul class="list-unstyled ps-4">
+                                                   <li>• Mantén un horario regular de sueño</li>
+                                                   <li>• Realiza pausas activas cada 2 horas</li>
+                                                   <li>• Practica ejercicios de respiración antes del examen</li>
+                                                </ul>
+                                             </div>
+                                             <div class="recommendation-item">
+                                                <h5><i class="fa fa-users me-2 text-info"></i>Estudio en Grupo</h5>
+                                                <ul class="list-unstyled ps-4">
+                                                   <li>• Organiza sesiones de estudio con compañeros</li>
+                                                   <li>• Explica los temas a otros para reforzar tu comprensión</li>
+                                                   <li>• Comparte y discute diferentes perspectivas del material</li>
+                                                </ul>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Fin de la Nueva Sección -->
                      </div>
                   </div>
                </div>
@@ -699,6 +775,9 @@
                   
                   // Actualizar la visualización
                   await updateHistoryDisplay('moods', 'mood-history');
+                  
+                  // Actualizar las recomendaciones inmediatamente
+                  await updateMoodFeedback();
                   
                   showNotification(
                      '¡Estado de ánimo guardado!',
@@ -1172,6 +1251,130 @@
                }, 300);
             }, 3000);
          }
+      </script>
+
+      <script>
+         // Configuración de los estados de ánimo
+         const moodConfig = {
+            frustrado: {
+               frase: "El estrés académico puede ser abrumador. Recuerda que cada desafío es una oportunidad para crecer y aprender nuevas estrategias de manejo.",
+               sugerencias: [
+                  "Técnica de respiración 4-4-4: inhala 4s, retén 4s, exhala 4s",
+                  "Organiza tus tareas por prioridad y tiempo estimado",
+                  "Toma descansos activos de 5 minutos entre sesiones de estudio"
+               ],
+               imagen: "images/moods/frustrado.jpeg",
+               color: "#FFA07A"
+            },
+            feliz: {
+               frase: "¡Excelente! Mantén ese equilibrio entre tus estudios y bienestar. Comparte tus estrategias exitosas con otros estudiantes.",
+               sugerencias: [
+                  "Registra en tu diario qué estrategias te funcionaron hoy",
+                  "Planifica tu próxima sesión de estudio manteniendo este estado positivo",
+                  "Practica mindfulness para mantener este equilibrio"
+               ],
+               imagen: "images/moods/feliz.jpeg",
+               color: "#7fb536"
+            },
+            triste: {
+               frase: "El estrés académico puede afectar nuestro estado de ánimo. Recuerda que es temporal y que tienes herramientas para manejarlo.",
+               sugerencias: [
+                  "Escribe en tu diario académico qué te está afectando",
+                  "Escucha música relajante mientras organizas tus materiales",
+                  "Practica la técnica de los 5 sentidos para volver al presente"
+               ],
+               imagen: "images/moods/triste.jpeg",
+               color: "#3498DB"
+            },
+            ansioso: {
+               frase: "La ansiedad ante los exámenes y trabajos es común. Vamos a trabajar en técnicas específicas para manejarla.",
+               sugerencias: [
+                  "Técnica 5-4-3-2-1: identifica 5 cosas que ves, 4 que puedes tocar, 3 que escuchas, 2 que hueles, 1 que saboreas",
+                  "Divide tus tareas en pasos más pequeños y manejables",
+                  "Practica la respiración diafragmática durante 5 minutos"
+               ],
+               imagen: "images/moods/ansioso.jpeg",
+               color: "#F59C00"
+            }
+         };
+
+         // Función para actualizar la sección de estado de ánimo
+         async function updateMoodFeedback() {
+            try {
+               const user = auth.currentUser;
+               if (!user) return;
+
+               const data = await getFromFirestore('moods');
+               const moodFeedback = document.getElementById('mood-feedback');
+               
+               if (!data || data.length === 0) {
+                  moodFeedback.innerHTML = `
+                     <div class="text-center p-4">
+                        <img src="images/moods/invitation.jpeg" alt="Invitation" class="img-fluid mb-3" style="max-width: 150px;">
+                        <p class="lead">¿Cómo te sientes hoy?</p>
+                        <p>Comparte tu estado de ánimo para recibir técnicas personalizadas de manejo del estrés académico y estrategias de estudio efectivas.</p>
+                     </div>
+                  `;
+                  return;
+               }
+
+               const lastMood = data[0];
+               // Obtener el valor del estado de ánimo directamente del texto
+               const moodText = lastMood.mood.split(' ')[1].toLowerCase().replace('(a)', '');
+               console.log('Estado de ánimo detectado:', moodText);
+               
+               const config = moodConfig[moodText];
+               console.log('Configuración encontrada:', config);
+
+               if (!config) {
+                  console.error('Configuración no encontrada para el estado de ánimo:', moodText);
+                  moodFeedback.innerHTML = `
+                     <div class="alert alert-warning">
+                        <p>Lo sentimos, no pudimos encontrar recomendaciones para tu estado de ánimo actual.</p>
+                     </div>
+                  `;
+                  return;
+               }
+
+               moodFeedback.innerHTML = `
+                  <div class="p-4" style="background-color: ${config.color}15; border-radius: 10px;">
+                     <img src="${config.imagen}" alt="${moodText}" class="img-fluid mb-3" style="max-width: 150px;">
+                     <p class="lead mb-4 text-start">${config.frase}</p>
+                     <div class="suggestions text-start">
+                        <h6 class="mb-3">Sugerencias para ti:</h6>
+                        <ul class="list-unstyled">
+                           ${config.sugerencias.map(sug => `
+                              <li class="mb-2">
+                                 <i class="fa fa-check-circle me-2"></i>${sug}
+                              </li>
+                           `).join('')}
+                        </ul>
+                     </div>
+                  </div>
+               `;
+            } catch (error) {
+               console.error('Error al actualizar el feedback del estado de ánimo:', error);
+               const moodFeedback = document.getElementById('mood-feedback');
+               moodFeedback.innerHTML = `
+                  <div class="alert alert-danger">
+                     <p>Lo sentimos, hubo un error al cargar tu espacio de bienestar.</p>
+                  </div>
+               `;
+            }
+         }
+
+         // Actualizar el feedback cuando cambie el estado de ánimo
+         document.getElementById('mood-selector').addEventListener('change', async function() {
+            // ... código existente ...
+            await updateMoodFeedback();
+         });
+
+         // Actualizar el feedback cuando el usuario inicie sesión
+         auth.onAuthStateChanged((user) => {
+            if (user) {
+               updateMoodFeedback();
+            }
+         });
       </script>
    </body>
 </html> 
