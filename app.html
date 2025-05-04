@@ -265,6 +265,16 @@
                opacity: 0;
             }
          }
+
+         .goal-checkbox {
+            width: 1.5em;
+            height: 1.5em;
+            accent-color: var(--areandina-green);
+            cursor: pointer;
+         }
+         .goal-checkbox + span {
+            margin-left: 0.7em;
+         }
       </style>
    </head>
    <body class="dashboard dashboard_1">
@@ -303,9 +313,9 @@
                      <div class="sidebar_user_info">
                         <div class="icon_setting"></div>
                         <div class="user_profle_side">
-                           <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
+                           <div class="user_img"><img class="img-responsive" id="sidebar-user-photo" src="images/layout_img/user_img.jpg" alt="#" /></div>
                            <div class="user_info">
-                              <h6>Estudiante</h6>
+                              <h6 id="sidebar-username">Estudiante</h6>
                               <p><span class="online_animation"></span> En línea</p>
                            </div>
                         </div>
@@ -446,7 +456,8 @@
                                     <div class="row">
                                        <div class="col-lg-12">
                                           <div class="form-group">
-                                             <input type="text" class="form-control" id="goal-input" placeholder="¿Cuál es tu próxima meta?">
+                                             <input type="text" class="form-control mb-2" id="goal-input" placeholder="¿Cuál es tu próxima meta?">
+                                             <input type="date" class="form-control mb-2" id="goal-date" placeholder="Fecha objetivo" min="" onclick="this.showPicker && this.showPicker()">
                                           </div>
                                           <button class="btn btn-primary" id="save-goal">Guardar Meta</button>
                                           <button class="btn btn-danger ms-2" id="clear-goals">Limpiar Metas</button>
@@ -633,12 +644,15 @@
                      </li>
                  `).join('');
              } else {
-                 container.innerHTML = items.map(item => `
-                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                         <span>${item.value}</span>
-                         <small class="text-muted">${item.date}</small>
-                     </li>
-                 `).join('');
+                 container.innerHTML = items.map(item => {
+                     const date = item.timestamp ? new Date(item.timestamp.toDate()).toLocaleDateString() : 'Fecha no disponible';
+                     return `
+                         <div class="history-item d-flex justify-content-between align-items-center">
+                             <span>${collection === 'moods' ? item.mood : item.goal}</span>
+                             <small class="text-muted">${date}</small>
+                         </div>
+                     `;
+                 }).join('');
              }
          }
 
@@ -688,19 +702,21 @@
              
              // Agregar evento al botón de limpiar metas
              document.getElementById('clear-goals').addEventListener('click', clearAllGoals);
+
+             // Establecer el mínimo del datepicker a hoy
+             const today = new Date();
+             const yyyy = today.getFullYear();
+             const mm = String(today.getMonth() + 1).padStart(2, '0');
+             const dd = String(today.getDate()).padStart(2, '0');
+             const minDate = `${yyyy}-${mm}-${dd}`;
+             document.getElementById('goal-date').setAttribute('min', minDate);
          });
 
          // Script para manejar el guardado de la meta
          document.getElementById('save-goal').addEventListener('click', function() {
              const goal = document.getElementById('goal-input').value;
-             if (goal) {
-                 saveToLocalStorage('goals', goal, false);
-                 updateHistoryDisplay('goals', 'goal-history');
-                 document.getElementById('goal-input').value = '';
-                 alert('¡Meta guardada con éxito!');
-             } else {
-                 alert('Por favor, ingresa una meta');
-             }
+             const targetDate = document.getElementById('goal-date').value;
+             saveGoal(goal, targetDate);
          });
 
          // Script para manejar el selector de estado de ánimo
@@ -999,19 +1015,41 @@
          }
 
          // Función para guardar una meta
-         async function saveGoal(goal) {
+         async function saveGoal(goal, targetDate) {
             try {
-               console.log('Intentando guardar meta:', goal);
-               const docId = await saveToFirestore('goals', { goal });
+               // Validar campos
+               if (!goal || !targetDate) {
+                  showNotification(
+                     'Campos incompletos',
+                     'Por favor, ingresa la meta y la fecha objetivo.',
+                     'error'
+                  );
+                  return;
+               }
+               // Validar que la fecha no sea anterior a hoy
+               const today = new Date();
+               today.setHours(0,0,0,0);
+               const selectedDate = new Date(targetDate);
+               selectedDate.setHours(0,0,0,0);
+               if (selectedDate < today) {
+                  showNotification(
+                     'Fecha inválida',
+                     'La fecha objetivo no puede ser anterior a hoy.',
+                     'error'
+                  );
+                  return;
+               }
+               console.log('Intentando guardar meta:', goal, 'Fecha objetivo:', targetDate);
+               const docId = await saveToFirestore('goals', { goal, targetDate, completed: false });
                console.log('Meta guardada exitosamente con ID:', docId);
-               
                await updateHistoryDisplay('goals', 'goal-history');
-               console.log('Historial actualizado');
-               
                showNotification(
                   '¡Meta guardada!',
                   'Tu meta ha sido guardada exitosamente.'
                );
+               // Limpiar los campos solo si se guardó correctamente
+               document.getElementById('goal-input').value = '';
+               document.getElementById('goal-date').value = '';
             } catch (error) {
                console.error('Error al guardar la meta:', error);
                showNotification(
@@ -1027,17 +1065,23 @@
             const authContainer = document.getElementById('auth-container');
             const appContent = document.getElementById('app-content');
             const userEmail = document.getElementById('user-email');
+            const sidebarUsername = document.getElementById('sidebar-username');
+            const sidebarUserPhoto = document.getElementById('sidebar-user-photo');
 
             if (user) {
                console.log('Usuario autenticado:', user.email);
-               // Usuario ha iniciado sesión
                authContainer.style.display = 'none';
                appContent.style.display = 'block';
                if (userEmail) {
                   userEmail.textContent = user.email;
                }
-               
-               // Cargar el historial inmediatamente
+               if (sidebarUsername) {
+                  sidebarUsername.textContent = user.displayName || 'Estudiante';
+               }
+               if (sidebarUserPhoto) {
+                  sidebarUserPhoto.src = user.photoURL || 'images/layout_img/user_img.jpg';
+                  sidebarUserPhoto.alt = user.displayName || 'Foto de perfil';
+               }
                updateHistoryDisplay('moods', 'mood-history').catch(error => {
                   console.error('Error al cargar estados de ánimo:', error);
                });
@@ -1046,9 +1090,15 @@
                });
             } else {
                console.log('No hay usuario autenticado');
-               // Usuario ha cerrado sesión
                authContainer.style.display = 'block';
                appContent.style.display = 'none';
+               if (sidebarUsername) {
+                  sidebarUsername.textContent = 'Estudiante';
+               }
+               if (sidebarUserPhoto) {
+                  sidebarUserPhoto.src = 'images/layout_img/user_img.jpg';
+                  sidebarUserPhoto.alt = 'Foto de perfil';
+               }
             }
          });
 
@@ -1060,22 +1110,38 @@
                   console.log('No hay usuario autenticado, esperando...');
                   return;
                }
-
                console.log('Obteniendo datos para:', collection, 'usuario:', user.email);
                const data = await getFromFirestore(collection);
                console.log('Datos obtenidos:', data);
                
                const historyElement = document.getElementById(elementId);
                if (historyElement) {
-                  historyElement.innerHTML = data.map(item => {
-                     const date = item.timestamp ? new Date(item.timestamp.toDate()).toLocaleDateString() : 'Fecha no disponible';
-                     return `
-                        <div class="history-item d-flex justify-content-between align-items-center">
-                           <span>${collection === 'moods' ? item.mood : item.goal}</span>
-                           <small class="text-muted">${date}</small>
-                        </div>
-                     `;
-                  }).join('');
+                  if (collection === 'goals') {
+                     historyElement.innerHTML = data.map(item => {
+                        const date = item.targetDate ? new Date(item.targetDate).toLocaleDateString() : 'Sin fecha';
+                        const checked = item.completed ? 'checked' : '';
+                        const style = item.completed ? 'text-decoration: line-through; color: #888;' : '';
+                        return `
+                           <li class="list-group-item d-flex justify-content-between align-items-center">
+                              <div class="d-flex align-items-center">
+                                 <input type="checkbox" class="form-check-input goal-checkbox me-2" data-id="${item.id}" ${checked}>
+                                 <span style="${style}">${item.goal}</span>
+                              </div>
+                              <small class="text-muted">${date}</small>
+                           </li>
+                        `;
+                     }).join('');
+                  } else {
+                     historyElement.innerHTML = data.map(item => {
+                        const date = item.timestamp ? new Date(item.timestamp.toDate()).toLocaleDateString() : 'Fecha no disponible';
+                        return `
+                           <div class="history-item d-flex justify-content-between align-items-center">
+                              <span>${collection === 'moods' ? item.mood : item.goal}</span>
+                              <small class="text-muted">${date}</small>
+                           </div>
+                        `;
+                     }).join('');
+                  }
                }
             } catch (error) {
                console.error('Error al actualizar el historial:', error);
@@ -1112,16 +1178,8 @@
          // Actualizar los event listeners para usar las nuevas funciones
          document.getElementById('save-goal').addEventListener('click', function() {
             const goal = document.getElementById('goal-input').value;
-            if (goal) {
-               saveGoal(goal);
-               document.getElementById('goal-input').value = '';
-            } else {
-               showNotification(
-                  'Campo vacío',
-                  'Por favor, ingresa una meta antes de guardar.',
-                  'error'
-               );
-            }
+            const targetDate = document.getElementById('goal-date').value;
+            saveGoal(goal, targetDate);
          });
       </script>
 
@@ -1373,6 +1431,22 @@
          auth.onAuthStateChanged((user) => {
             if (user) {
                updateMoodFeedback();
+            }
+         });
+      </script>
+
+      <!-- Checklist para marcar metas como finalizadas -->
+      <script>
+         document.getElementById('goal-history').addEventListener('change', async function(e) {
+            if (e.target.classList.contains('goal-checkbox')) {
+               const docId = e.target.dataset.id;
+               const completed = e.target.checked;
+               try {
+                  await db.collection('goals').doc(docId).update({ completed });
+                  await updateHistoryDisplay('goals', 'goal-history');
+               } catch (error) {
+                  showNotification('Error', 'No se pudo actualizar el estado de la meta.', 'error');
+               }
             }
          });
       </script>
