@@ -645,6 +645,34 @@
                   
                   console.log('Usuario autenticado:', user.email);
                   console.log('ID del usuario:', user.uid);
+
+                  // Verificar si ya existe un registro para hoy
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+                  const tomorrow = new Date(today);
+                  tomorrow.setDate(tomorrow.getDate() + 1);
+
+                  const existingMood = await db.collection('moods')
+                     .where('userId', '==', user.uid)
+                     .orderBy('timestamp', 'desc')
+                     .limit(1)
+                     .get();
+
+                  if (!existingMood.empty) {
+                     const lastMood = existingMood.docs[0].data();
+                     const lastMoodDate = lastMood.timestamp.toDate();
+                     lastMoodDate.setHours(0, 0, 0, 0);
+                     
+                     if (lastMoodDate.getTime() === today.getTime()) {
+                        showNotification(
+                           'Ya registraste tu estado de ánimo hoy',
+                           'Puedes registrar un nuevo estado de ánimo mañana.',
+                           'error'
+                        );
+                        this.value = '';
+                        return;
+                     }
+                  }
                   
                   const moodData = {
                      mood: moodText,
