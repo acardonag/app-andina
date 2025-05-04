@@ -271,6 +271,7 @@
             height: 1.5em;
             accent-color: var(--areandina-green);
             cursor: pointer;
+            margin-right: 0.5em;
          }
          .goal-checkbox + span {
             margin-left: 0.7em;
@@ -460,14 +461,20 @@
                                              <input type="date" class="form-control mb-2" id="goal-date" placeholder="Fecha objetivo" min="" onclick="this.showPicker && this.showPicker()">
                                           </div>
                                           <button class="btn btn-primary" id="save-goal">Guardar Meta</button>
-                                          <button class="btn btn-danger ms-2" id="clear-goals">Limpiar Metas</button>
-                                          <!-- Historial de metas -->
-                                          <div class="mt-3">
-                                             <h5>Mis Metas:</h5>
-                                             <ul class="list-group" id="goal-history">
-                                                <!-- El historial se llenará dinámicamente -->
-                                             </ul>
+                                          <button class="btn btn-secondary ms-2" id="toggle-completed-goals">
+                                             <i class="fa fa-eye-slash me-1" id="toggle-goals-icon"></i> <span id="toggle-goals-text">Ver solo pendientes</span>
+                                          </button>
+                                          <!-- Antes del título 'Mis Metas' -->
+                                          <div class="text-success fw-bold mb-1 mt-3" id="goals-progress-legend">¡Lo estás haciendo bien! Este es tu avance:</div>
+                                          <div class="progress my-3" style="height: 18px;">
+                                             <div class="progress-bar bg-success" id="goals-progress-bar" role="progressbar" style="width: 0%; font-size: 14px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                                           </div>
+                                          <h5>Mis Metas:</h5>
+                                          <!-- Historial de metas -->
+                                          <ul class="list-group" id="goal-history">
+                                             <!-- El historial se llenará dinámicamente -->
+                                          </ul>
+                                          <small class="text-muted d-block mt-2"><i class="fa fa-exclamation-triangle text-warning"></i> Próxima a vencer</small>
                                        </div>
                                     </div>
                                  </div>
@@ -480,13 +487,14 @@
                               <div class="white_shd full margin_bottom_30">
                                  <div class="full graph_head">
                                     <div class="heading1 margin_0">
-                                       <h2>Cuéntanos más sobre ti</h2>
+                                       <h2>Cuestionario de Estrés Académico</h2>
                                     </div>
                                  </div>
                                  <div class="full padding_infor_info">
                                     <div class="row">
                                        <div class="col-lg-12">
-                                          <iframe src="https://docs.google.com/forms/d/1DGiFLEuopUtymMpkPw35UJYSxxXO1VhCy0qI7hoF9ds/viewform?embedded=true" 
+                                          <p class="mb-3">Te invitamos a diligenciar este breve cuestionario para conocer tu nivel de estrés frente a diferentes situaciones académicas. Al finalizar, recibirás un informe personalizado con tu nivel de estrés y recomendaciones para gestionarlo.</p>
+                                          <iframe src="https://forms.gle/YPv53RwKYFuzPVsw9" 
                                                   width="100%" 
                                                   height="600" 
                                                   frameborder="0" 
@@ -700,9 +708,6 @@
              updateHistoryDisplay('moods', 'mood-history');
              updateHistoryDisplay('goals', 'goal-history');
              
-             // Agregar evento al botón de limpiar metas
-             document.getElementById('clear-goals').addEventListener('click', clearAllGoals);
-
              // Establecer el mínimo del datepicker a hoy
              const today = new Date();
              const yyyy = today.getFullYear();
@@ -1117,17 +1122,47 @@
                const historyElement = document.getElementById(elementId);
                if (historyElement) {
                   if (collection === 'goals') {
-                     historyElement.innerHTML = data.map(item => {
-                        const date = item.targetDate ? new Date(item.targetDate).toLocaleDateString() : 'Sin fecha';
+                     // Barra de progreso
+                     const progressBar = document.getElementById('goals-progress-bar');
+                     if (progressBar) {
+                        const total = data.length;
+                        const completed = data.filter(item => item.completed).length;
+                        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+                        progressBar.style.width = percent + '%';
+                        progressBar.setAttribute('aria-valuenow', percent);
+                        progressBar.textContent = percent + '% completado';
+                     }
+                     let filtered = data;
+                     if (hideCompletedGoals) {
+                        filtered = data.filter(item => !item.completed);
+                     }
+                     // Ordenar por fecha objetivo (más próxima primero)
+                     filtered = filtered.sort((a, b) => {
+                        if (!a.targetDate) return 1;
+                        if (!b.targetDate) return -1;
+                        return new Date(a.targetDate) - new Date(b.targetDate);
+                     });
+                     const now = new Date();
+                     historyElement.innerHTML = filtered.map(item => {
+                        const date = item.targetDate ? new Date(item.targetDate) : null;
+                        const dateStr = date ? date.toLocaleDateString() : 'Sin fecha';
                         const checked = item.completed ? 'checked' : '';
                         const style = item.completed ? 'text-decoration: line-through; color: #888;' : '';
+                        let warning = '';
+                        if (date && !item.completed) {
+                           const diff = (date - now) / (1000 * 60 * 60 * 24);
+                           if (diff >= 0 && diff < 7) {
+                              warning = `<span class='text-warning ms-2'><i class='fa fa-exclamation-triangle'></i></span>`;
+                           }
+                        }
                         return `
                            <li class="list-group-item d-flex justify-content-between align-items-center">
                               <div class="d-flex align-items-center">
                                  <input type="checkbox" class="form-check-input goal-checkbox me-2" data-id="${item.id}" ${checked}>
                                  <span style="${style}">${item.goal}</span>
+                                 ${warning}
                               </div>
-                              <small class="text-muted">${date}</small>
+                              <small class="text-muted">${dateStr}</small>
                            </li>
                         `;
                      }).join('');
@@ -1174,13 +1209,6 @@
                alert('Error al limpiar las metas');
             }
          }
-
-         // Actualizar los event listeners para usar las nuevas funciones
-         document.getElementById('save-goal').addEventListener('click', function() {
-            const goal = document.getElementById('goal-input').value;
-            const targetDate = document.getElementById('goal-date').value;
-            saveGoal(goal, targetDate);
-         });
       </script>
 
       <!-- Modal para Eliminar Contraseña -->
@@ -1447,6 +1475,25 @@
                } catch (error) {
                   showNotification('Error', 'No se pudo actualizar el estado de la meta.', 'error');
                }
+            }
+         });
+      </script>
+
+      <script>
+         let hideCompletedGoals = false;
+         document.getElementById('toggle-completed-goals').addEventListener('click', function() {
+            hideCompletedGoals = !hideCompletedGoals;
+            updateHistoryDisplay('goals', 'goal-history');
+            const icon = document.getElementById('toggle-goals-icon');
+            const text = document.getElementById('toggle-goals-text');
+            if (hideCompletedGoals) {
+               icon.classList.remove('fa-eye-slash');
+               icon.classList.add('fa-eye');
+               text.textContent = 'Ver todas';
+            } else {
+               icon.classList.remove('fa-eye');
+               icon.classList.add('fa-eye-slash');
+               text.textContent = 'Ver solo pendientes';
             }
          });
       </script>
