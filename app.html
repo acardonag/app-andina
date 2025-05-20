@@ -276,6 +276,29 @@
          .goal-checkbox + span {
             margin-left: 0.7em;
          }
+
+         .youtube-thumbnail {
+            max-width: 220px;
+            max-height: 124px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto 1rem auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+         }
+
+         .carousel-control-prev-icon, .carousel-control-next-icon {
+           background-color: #198754;
+           border-radius: 50%;
+           width: 2.5rem;
+           height: 2.5rem;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+           opacity: 0.95;
+         }
+         .carousel-control-prev, .carousel-control-next {
+           filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+         }
       </style>
    </head>
    <body class="dashboard dashboard_1">
@@ -329,10 +352,7 @@
                            <a href="app.html"><i class="fa fa-home yellow_color"></i> <span>Inicio</span></a>
                         </li>
                         <li>
-                           <a href="profile.html"><i class="fa fa-user blue1_color"></i> <span>Mi Perfil</span></a>
-                        </li>
-                        <li>
-                           <a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Configuración</span></a>
+                           <a href="profile-app.html"><i class="fa fa-user blue1_color"></i> <span>Mi Perfil</span></a>
                         </li>
                         <li>
                            <a href="#" onclick="logout()"><i class="fa fa-sign-out yellow_color"></i> <span>Cerrar Sesión</span></a>
@@ -354,8 +374,8 @@
                            <div class="right_topbar">
                               <div class="icon_info">
                                  <ul>
-                                    <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
-                                    <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
+                                    <!-- Eliminado: <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li> -->
+                                    <li><a href="#" id="help-icon"><i class="fa fa-question-circle"></i></a></li>
                                  </ul>
                               </div>
                            </div>
@@ -380,6 +400,9 @@
                                  <div class="full graph_head">
                                     <div class="heading1 margin_0">
                                        <h2>¡Hola! Estamos aquí para acompañarte en tu bienestar</h2>
+                                    </div>
+                                    <div class="text-center my-3">
+                                       <img src="images/logo/cerebro.png" alt="Cerebro Bienestar" style="max-width:180px; width:100%; height:auto; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                                     </div>
                                  </div>
                                  <div class="full padding_infor_info">
@@ -494,69 +517,10 @@
                                     <div class="row">
                                        <div class="col-lg-12">
                                           <p class="mb-3">Te invitamos a diligenciar este breve cuestionario para conocer tu nivel de estrés frente a diferentes situaciones académicas. Al finalizar, recibirás un informe personalizado con tu nivel de estrés y recomendaciones para gestionarlo.</p>
-                                          <iframe src="https://forms.gle/YPv53RwKYFuzPVsw9" 
-                                                  width="100%" 
-                                                  height="600" 
-                                                  frameborder="0" 
-                                                  marginheight="0" 
-                                                  marginwidth="0">
-                                             Cargando...
-                                          </iframe>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Nueva Sección de Recomendaciones para Exámenes -->
-                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="white_shd full margin_bottom_30">
-                                 <div class="full graph_head">
-                                    <div class="heading1 margin_0">
-                                       <h2>Recomendaciones para Preparar tus Exámenes</h2>
-                                    </div>
-                                 </div>
-                                 <div class="full padding_infor_info">
-                                    <div class="row">
-                                       <div class="col-lg-4 text-center">
-                                          <img src="images/moods/invitation.jpeg" alt="Preparación de exámenes" class="img-fluid mb-4" style="max-width: 200px; border-radius: 10px;">
-                                       </div>
-                                       <div class="col-lg-8">
-                                          <h4 class="mb-4">Estrategias efectivas para el éxito académico</h4>
-                                          <div class="recommendations">
-                                             <div class="recommendation-item mb-4">
-                                                <h5><i class="fa fa-calendar me-2 text-primary"></i>Planificación</h5>
-                                                <ul class="list-unstyled ps-4">
-                                                   <li>• Crea un calendario de estudio 2-3 semanas antes del examen</li>
-                                                   <li>• Divide el material en secciones manejables</li>
-                                                   <li>• Establece objetivos diarios realistas</li>
-                                                </ul>
-                                             </div>
-                                             <div class="recommendation-item mb-4">
-                                                <h5><i class="fa fa-book me-2 text-success"></i>Técnicas de Estudio</h5>
-                                                <ul class="list-unstyled ps-4">
-                                                   <li>• Utiliza mapas mentales y resúmenes</li>
-                                                   <li>• Practica con exámenes anteriores</li>
-                                                   <li>• Aplica la técnica Pomodoro: 25 minutos de estudio, 5 de descanso</li>
-                                                </ul>
-                                             </div>
-                                             <div class="recommendation-item mb-4">
-                                                <h5><i class="fa fa-heart me-2 text-danger"></i>Autocuidado</h5>
-                                                <ul class="list-unstyled ps-4">
-                                                   <li>• Mantén un horario regular de sueño</li>
-                                                   <li>• Realiza pausas activas cada 2 horas</li>
-                                                   <li>• Practica ejercicios de respiración antes del examen</li>
-                                                </ul>
-                                             </div>
-                                             <div class="recommendation-item">
-                                                <h5><i class="fa fa-users me-2 text-info"></i>Estudio en Grupo</h5>
-                                                <ul class="list-unstyled ps-4">
-                                                   <li>• Organiza sesiones de estudio con compañeros</li>
-                                                   <li>• Explica los temas a otros para reforzar tu comprensión</li>
-                                                   <li>• Comparte y discute diferentes perspectivas del material</li>
-                                                </ul>
-                                             </div>
+                                          <div class="text-center">
+                                             <a href="https://forms.gle/YPv53RwKYFuzPVsw9" target="_blank" class="btn btn-primary btn-lg">
+                                                <i class="fa fa-external-link me-2"></i>Completar Cuestionario
+                                             </a>
                                           </div>
                                        </div>
                                     </div>
@@ -564,7 +528,355 @@
                               </div>
                            </div>
                         </div>
-                        <!-- Fin de la Nueva Sección -->
+                        <!-- Acordeón para Recomendaciones para Preparar tus Exámenes -->
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="accordion mb-4" id="recomendacionesAccordion">
+                              <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingRecomendaciones">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRecomendaciones" aria-expanded="true" aria-controls="collapseRecomendaciones">
+                                    <i class="fa fa-lightbulb me-2 text-warning"></i> Recomendaciones para Preparar tus Exámenes
+                                  </button>
+                                </h2>
+                                <div id="collapseRecomendaciones" class="accordion-collapse collapse show" aria-labelledby="headingRecomendaciones" data-bs-parent="#recomendacionesAccordion">
+                                  <div class="accordion-body">
+                                    <div class="full padding_infor_info">
+                                      <div class="row">
+                                        <div class="col-lg-4 text-center">
+                                          <img src="images/moods/invitation.jpeg" alt="Preparación de exámenes" class="img-fluid mb-4" style="max-width: 200px; border-radius: 10px;">
+                                        </div>
+                                        <div class="col-lg-8">
+                                          <h4 class="mb-4">Estrategias efectivas para el éxito académico</h4>
+                                          <div class="accordion" id="subRecomendacionesAccordion">
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="headingPlanificacion">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlanificacion" aria-expanded="true" aria-controls="collapsePlanificacion">
+                                                  <i class="fa fa-calendar me-2 text-primary"></i> Planificación
+                                                </button>
+                                              </h2>
+                                              <div id="collapsePlanificacion" class="accordion-collapse collapse show" aria-labelledby="headingPlanificacion" data-bs-parent="#subRecomendacionesAccordion">
+                                                <div class="accordion-body">
+                                                  <ul class="list-unstyled ps-4">
+                                                    <li>• Crea un calendario de estudio 2-3 semanas antes del examen</li>
+                                                    <li>• Divide el material en secciones manejables</li>
+                                                    <li>• Establece objetivos diarios realistas</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="headingTecnicas">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTecnicas" aria-expanded="false" aria-controls="collapseTecnicas">
+                                                  <i class="fa fa-book me-2 text-success"></i> Técnicas de Estudio
+                                                </button>
+                                              </h2>
+                                              <div id="collapseTecnicas" class="accordion-collapse collapse" aria-labelledby="headingTecnicas" data-bs-parent="#subRecomendacionesAccordion">
+                                                <div class="accordion-body">
+                                                  <ul class="list-unstyled ps-4">
+                                                    <li>• Utiliza mapas mentales y resúmenes</li>
+                                                    <li>• Practica con exámenes anteriores</li>
+                                                    <li>• Aplica la técnica Pomodoro: 25 minutos de estudio, 5 de descanso</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="headingAutocuidado">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutocuidado" aria-expanded="false" aria-controls="collapseAutocuidado">
+                                                  <i class="fa fa-heart me-2 text-danger"></i> Autocuidado
+                                                </button>
+                                              </h2>
+                                              <div id="collapseAutocuidado" class="accordion-collapse collapse" aria-labelledby="headingAutocuidado" data-bs-parent="#subRecomendacionesAccordion">
+                                                <div class="accordion-body">
+                                                  <ul class="list-unstyled ps-4">
+                                                    <li>• Mantén un horario regular de sueño</li>
+                                                    <li>• Realiza pausas activas cada 2 horas</li>
+                                                    <li>• Practica ejercicios de respiración antes del examen</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                              <h2 class="accordion-header" id="headingGrupo">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGrupo" aria-expanded="false" aria-controls="collapseGrupo">
+                                                  <i class="fa fa-users me-2 text-info"></i> Estudio en Grupo
+                                                </button>
+                                              </h2>
+                                              <div id="collapseGrupo" class="accordion-collapse collapse" aria-labelledby="headingGrupo" data-bs-parent="#subRecomendacionesAccordion">
+                                                <div class="accordion-body">
+                                                  <ul class="list-unstyled ps-4">
+                                                    <li>• Organiza sesiones de estudio con compañeros</li>
+                                                    <li>• Explica los temas a otros para reforzar tu comprensión</li>
+                                                    <li>• Comparte y discute diferentes perspectivas del material</li>
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin acordeón recomendaciones -->
+                        <!-- Acordeón de talleres debajo de Recomendaciones para Preparar tus Exámenes -->
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="accordion" id="talleresAccordion">
+                                 <!-- Taller 1 -->
+                                 <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTaller1">
+                                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTaller1" aria-expanded="true" aria-controls="collapseTaller1">
+                                          <span class="me-2">🧠</span> Taller 1: Conociendo mis estresores, síntomas y estrategias de afrontamiento
+                                       </button>
+                                    </h2>
+                                    <div id="collapseTaller1" class="accordion-collapse collapse show" aria-labelledby="headingTaller1" data-bs-parent="#talleresAccordion">
+                                       <div class="accordion-body">
+                                          <!-- Carrusel Taller 1 -->
+                                          <div id="carouselTaller1" class="carousel slide" data-bs-ride="carousel">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/wp_F9TveCNA/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura El rincón del enfermero">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">El rincón del enfermero – Episodio 1: Estrés académico</h5>
+                                                         <p class="card-text">Un diálogo entre estudiantes de Enfermería sobre las causas del estrés académico y cómo afrontarlo.</p>
+                                                         <a href="https://www.youtube.com/watch?v=wp_F9TveCNA" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/Kt07dggZRv8/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Keep Calm">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Keep Calm: Sesión educativa – Afrontamiento del estrés académico</h5>
+                                                         <p class="card-text">Sesión educativa realizada por estudiantes de la Universidad Nacional de Colombia sobre estrategias para manejar el estrés académico.</p>
+                                                         <a href="https://www.youtube.com/watch?v=Kt07dggZRv8" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/eUfZl3iNN-c/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Nivel de estrés académico">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Nivel de estrés académico en estudiantes de Enfermería</h5>
+                                                         <p class="card-text">Análisis sobre cómo el estrés afecta a estudiantes de Enfermería y posibles soluciones.</p>
+                                                         <a href="https://www.youtube.com/watch?v=eUfZl3iNN-c" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/RYAb7W76rtI/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Podcast El estrés académico">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Podcast: El estrés académico</h5>
+                                                         <p class="card-text">Reflexión sobre la importancia de hablar del estrés académico desde una perspectiva pedagógica.</p>
+                                                         <a href="https://www.youtube.com/watch?v=RYAb7W76rtI" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/_mjgruT60Vo/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Taller sobre manejo del estrés académico">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Taller sobre manejo del estrés académico</h5>
+                                                         <p class="card-text">Taller virtual que informa sobre estrategias de afrontamiento frente al estrés académico.</p>
+                                                         <a href="https://www.youtube.com/watch?v=_mjgruT60Vo" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselTaller1" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Anterior</span>
+                                             </button>
+                                             <button class="carousel-control-next" type="button" data-bs-target="#carouselTaller1" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Siguiente</span>
+                                             </button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- Taller 2 -->
+                                 <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTaller2">
+                                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTaller2" aria-expanded="false" aria-controls="collapseTaller2">
+                                          <span class="me-2">⏱️</span> Taller 2: Planificación y gestión del tiempo
+                                       </button>
+                                    </h2>
+                                    <div id="collapseTaller2" class="accordion-collapse collapse" aria-labelledby="headingTaller2" data-bs-parent="#talleresAccordion">
+                                       <div class="accordion-body">
+                                          <!-- Carrusel Taller 2 -->
+                                          <div id="carouselTaller2" class="carousel slide" data-bs-ride="carousel">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/Sv2GJV92Gmc/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Administración del tiempo para estudiantes">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Administración del tiempo para estudiantes | Productividad</h5>
+                                                         <p class="card-text">Recomendaciones para aprender a administrar mejor el tiempo y aumentar la productividad.</p>
+                                                         <a href="https://www.youtube.com/watch?v=Sv2GJV92Gmc" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/jsHDPiPTQZY/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Gestión del tiempo para estudiantes">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Gestión del tiempo para estudiantes: 6 trucos para mejorar</h5>
+                                                         <p class="card-text">Estrategias efectivas de gestión del tiempo diseñadas específicamente para estudiantes.</p>
+                                                         <a href="https://www.youtube.com/watch?v=jsHDPiPTQZY" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/cibFlFeqSJ0/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Cómo gestionar tu tiempo si eres estudiante">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Cómo gestionar tu tiempo si eres estudiante</h5>
+                                                         <p class="card-text">Consejos prácticos sobre cómo gestionar el tiempo de manera efectiva.</p>
+                                                         <a href="https://www.youtube.com/watch?v=cibFlFeqSJ0" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/iwUF-fNBA7U/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Consejos de tutoría: Planificación del semestre y gestión del tiempo">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Consejos de tutoría: Planificación del semestre y gestión del tiempo</h5>
+                                                         <p class="card-text">Consejos de tutores expertos sobre planificación y gestión del tiempo en el estudio.</p>
+                                                         <a href="https://www.youtube.com/watch?v=iwUF-fNBA7U" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/iwUF-fNBA7U/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Estrategias para una adecuada gestión del tiempo en la universidad">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Estrategias para una adecuada gestión del tiempo en la universidad</h5>
+                                                         <p class="card-text">Estrategias efectivas de gestión del tiempo para estudiantes universitarios.</p>
+                                                         <a href="https://www.youtube.com/watch?v=iwUF-fNBA7U" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselTaller2" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Anterior</span>
+                                             </button>
+                                             <button class="carousel-control-next" type="button" data-bs-target="#carouselTaller2" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Siguiente</span>
+                                             </button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- Taller 3 -->
+                                 <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTaller3">
+                                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTaller3" aria-expanded="false" aria-controls="collapseTaller3">
+                                          <span class="me-2">📘</span> Taller 3: Superando mis miedos ante las evaluaciones
+                                       </button>
+                                    </h2>
+                                    <div id="collapseTaller3" class="accordion-collapse collapse" aria-labelledby="headingTaller3" data-bs-parent="#talleresAccordion">
+                                       <div class="accordion-body">
+                                          <!-- Carrusel Taller 3 -->
+                                          <div id="carouselTaller3" class="carousel slide" data-bs-ride="carousel">
+                                             <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/2KHOs5reMaQ/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Ansiedad ante los exámenes">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Ansiedad ante los exámenes</h5>
+                                                         <p class="card-text">Explicación sobre la ansiedad ante los exámenes y cómo manejarla.</p>
+                                                         <a href="https://www.youtube.com/watch?v=2KHOs5reMaQ" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/efZ7_jJPJjk/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura ¿Cómo manejar la ansiedad y el miedo a rendir exámenes finales en la universidad?">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">¿Cómo manejar la ansiedad y el miedo a rendir exámenes finales en la universidad?</h5>
+                                                         <p class="card-text">Consejos sobre cómo manejar la ansiedad y el miedo durante los exámenes finales.</p>
+                                                         <a href="https://www.youtube.com/watch?v=efZ7_jJPJjk" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/sZXXJEWKe_k/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Manejo de la ansiedad y el estrés ante los exámenes">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Manejo de la ansiedad y el estrés ante los exámenes</h5>
+                                                         <p class="card-text">Curso organizado por la universidad para ayudar a los estudiantes a manejar la ansiedad y el estrés.</p>
+                                                         <a href="https://www.youtube.com/watch?v=sZXXJEWKe_k" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/3K0xv16ApCw/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Podcast sobre: La ansiedad en los estudiantes: cómo enfrentarla y superarla">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Podcast sobre: La ansiedad en los estudiantes: cómo enfrentarla y superarla</h5>
+                                                         <p class="card-text">Episodio que aborda cómo enfrentar y superar la ansiedad en estudiantes.</p>
+                                                         <a href="https://www.youtube.com/watch?v=3K0xv16ApCw" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                   <div class="card border-0">
+                                                      <img src="https://img.youtube.com/vi/5czBgdDFPQU/hqdefault.jpg" class="card-img-top youtube-thumbnail" alt="Miniatura Afrontamiento de exámenes (técnicas de estudio para combatir la ansiedad)">
+                                                      <div class="card-body">
+                                                         <h5 class="card-title">Afrontamiento de exámenes (técnicas de estudio para combatir la ansiedad)</h5>
+                                                         <p class="card-text">Técnicas de estudio que ayudan a combatir la ansiedad y el estrés ante la presentación de exámenes.</p>
+                                                         <a href="https://www.youtube.com/watch?v=5czBgdDFPQU" target="_blank" class="btn btn-outline-success"><i class="fab fa-youtube me-1"></i>Ver en YouTube</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselTaller3" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Anterior</span>
+                                             </button>
+                                             <button class="carousel-control-next" type="button" data-bs-target="#carouselTaller3" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Siguiente</span>
+                                             </button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Fin acordeón talleres -->
+                        <!-- Sección de Contacto -->
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="white_shd full margin_bottom_30">
+                                 <div class="full graph_head">
+                                    <div class="heading1 margin_0">
+                                       <h2>Ponte en contacto con nosotros</h2>
+                                    </div>
+                                 </div>
+                                 <div class="full padding_infor_info">
+                                    <div class="row">
+                                       <div class="col-lg-12">
+                                          <img src="images/landing_page/contacto1.jpeg" alt="Contacto 1" class="img-fluid mb-4" style="width: 100%; cursor: pointer;" onclick="openImageModal(this.src)">
+                                          <img src="images/landing_page/contacto2.jpeg" alt="Contacto 2" class="img-fluid" style="width: 100%; cursor: pointer;" onclick="openImageModal(this.src)">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Fin sección de contacto -->
                      </div>
                   </div>
                </div>
@@ -1424,6 +1736,9 @@
 
                moodFeedback.innerHTML = `
                   <div class="p-4" style="background-color: ${config.color}15; border-radius: 10px;">
+                     <div class="d-flex align-items-center mb-3">
+                        <h4 class="mb-0">Estado de ánimo: ${lastMood.mood}</h4>
+                     </div>
                      <img src="${config.imagen}" alt="${moodText}" class="img-fluid mb-3" style="max-width: 150px;">
                      <p class="lead mb-4 text-start">${config.frase}</p>
                      <div class="suggestions text-start">
@@ -1496,6 +1811,51 @@
                text.textContent = 'Ver solo pendientes';
             }
          });
+      </script>
+
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var helpIcon = document.getElementById('help-icon');
+        if (helpIcon) {
+          helpIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification(
+              '¿Tienes preguntas?',
+              'Comunícate con el área de orientación y permanencia de la universidad.<br><b>Correo:</b> <a href="mailto:psicologeducativapei@areandina.edu.co">psicologeducativapei@areandina.edu.co</a>',
+              'success'
+            );
+            
+            // Hacer scroll suave hasta la sección de contacto
+            const headings = document.querySelectorAll('h2');
+            const contactHeading = Array.from(headings).find(h2 => h2.textContent.includes('Ponte en contacto con nosotros'));
+            if (contactHeading) {
+              contactHeading.closest('.row').scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        }
+      });
+      </script>
+
+      <!-- Modal para las imágenes -->
+      <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body text-center p-0">
+                  <img src="" alt="Imagen ampliada" class="img-fluid" id="modalImage">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+      function openImageModal(imageSrc) {
+         const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+         document.getElementById('modalImage').src = imageSrc;
+         modal.show();
+      }
       </script>
    </body>
 </html> 
